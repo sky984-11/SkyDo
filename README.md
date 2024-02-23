@@ -14,13 +14,16 @@
 ## 使用指南
 
 ### Todo界面
-![image](https://github.com/sky984-11/SkyDo/assets/58068214/98cdfbcc-6e2c-4674-8229-bd6f229176c2)
+![image](https://github.com/sky984-11/SkyDo/assets/58068214/38a11fd6-8bd5-48b1-90ee-fcd383c36e0f)
+
 
 ### Done
-![image](https://github.com/sky984-11/SkyDo/assets/58068214/a33f7b32-2b54-4912-ab5a-845b12d74b8f)
+![image](https://github.com/sky984-11/SkyDo/assets/58068214/220a2bfb-bac0-4696-aa72-3efab54dbbba)
+
 
 ### settings
-![image](https://github.com/sky984-11/SkyDo/assets/58068214/272d6d0e-0313-4bfa-bed1-bc79ef166d94)
+![image](https://github.com/sky984-11/SkyDo/assets/58068214/61e3e525-4097-46dc-b0b9-0cec186a4a51)
+
 
 
 ## 后续开发
