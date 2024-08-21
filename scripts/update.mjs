@@ -1,10 +1,4 @@
-/*
- * @Description: 
- * @Author: sky
- * @Date: 2024-08-20 13:38:35
- * @LastEditTime: 2024-08-20 13:39:04
- * @LastEditors: sky
- */
+
 // @ts-nocheck
 import fetch from 'node-fetch';
 import { getOctokit, context } from '@actions/github';
