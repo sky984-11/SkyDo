@@ -3,7 +3,7 @@
   "build": {
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
-    "devPath": "http://localhost:8080",
+    "devPath": "http://localhost:5173",
     "distDir": "../dist"
   },
   "package": {
@@ -89,12 +89,7 @@
       "dangerousUseHttpScheme": true,
       "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
     },
-    "updater": {
-      "active": true,
-      "dialog": false,
-      "endpoints": ["https://github.com/sky984-11/SkyDo/releases/download/updater/update.json"],
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDZDRkUyOTg0MUVCMUI3MTUKUldRVnQ3RWVoQ24rYkR3THQyV0dJK1pjdUVDazcwSG05OTlrankrSmVjRityaU1IM3JTN3l3QkcK%"
-    },
+
     "windows": [
       {
         "fullscreen": false,
