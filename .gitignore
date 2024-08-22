@@ -1,5 +1,4 @@
-ui/dist
-ui/node_modules
-ui/src-tauri
-app/cache.db*
-app/config.py
+dist
+node_modules
+src-tauri/target
+
