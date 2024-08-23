@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: todo list
  * @Date: 2024-01-02 10:08:58
- * @LastEditTime: 2024-03-12 15:44:47
+ * @LastEditTime: 2024-08-23 17:22:59
  * @FilePath: \SkyDo\TODO.md
 -->
 ## 优先级标识
@@ -75,6 +75,7 @@
 
 ### V0.5.11
 - [x] 🔴 增加待办导出功能
+- [x] 🔴 修复Linux平台下无法加载数据问题
 
 - [ ] 🟡 滚动升级
 - [ ] 🟢 程序悬浮窗口功能
