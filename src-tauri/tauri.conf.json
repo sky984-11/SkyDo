@@ -22,8 +22,8 @@
       "fs": {
         "all": true,
         "scope": [
-          "$RESOURCE/*",
-          "$RESOURCE/images/*"
+          "$APPDATA/*",
+          "$APPDATA/images/*"
         ]
       },
       "notification": {

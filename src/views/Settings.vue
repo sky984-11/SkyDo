@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-30 15:53:35
- * @LastEditTime: 2024-08-22 13:40:40
+ * @LastEditTime: 2024-08-23 17:14:54
  * @FilePath: \SkyDo\ui\src\views\Settings.vue
 -->
 <template>
@@ -106,11 +106,11 @@ export default {
 
       this.blobToUint8Array(data.file).then(async (uint8Array) => {
         // 上传时默认创建images目录
-        await createDir('images', { dir: BaseDirectory.Resource, recursive: true });
+        await createDir('images', { dir: BaseDirectory.AppData, recursive: true });
         // 写入图片到images目录下
-        await writeBinaryFile('images/' + data.file.name, uint8Array, { dir: BaseDirectory.Resource });
+        await writeBinaryFile('images/' + data.file.name, uint8Array, { dir: BaseDirectory.AppData });
         //判断文件是否成功写入
-        let isImagesExit = await exists('images/' + data.file.name, { dir: BaseDirectory.Resource });
+        let isImagesExit = await exists('images/' + data.file.name, { dir: BaseDirectory.AppData });
         if (isImagesExit) {
           // 设置背景图片的方法交给父组件实现
           this.$emit('setBackgroupImage','images',data.file.name,)

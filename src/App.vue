@@ -69,7 +69,7 @@ export default {
 
 
   async handleSetBackgroundImage(dir, filename) {
-    const readImages = await readBinaryFile(dir + '/' + filename, { dir: BaseDirectory.Resource });
+    const readImages = await readBinaryFile(dir + '/' + filename, { dir: BaseDirectory.AppData });
     let blob = new Blob([readImages]);
     this.backgroundImage = URL.createObjectURL(blob);
     this.settings['imageName'] = filename;
@@ -89,9 +89,9 @@ export default {
   async getSettingsList() {
     const list = DB.get("settings");
     this.settings = list
-    let isImagesExit = await exists('images/' + list.imageName, { dir: BaseDirectory.Resource });
+    let isImagesExit = await exists('images/' + list.imageName, { dir: BaseDirectory.AppData });
     if (isImagesExit) {
-      const readImages = await readBinaryFile('images/' + list.imageName, { dir: BaseDirectory.Resource });
+      const readImages = await readBinaryFile('images/' + list.imageName, { dir: BaseDirectory.AppData });
       let blob = new Blob([readImages]);
       this.backgroundImage = URL.createObjectURL(blob);
     }

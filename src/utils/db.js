@@ -18,13 +18,13 @@ import { getNowDate, getNowDateTime } from "@/utils/common";
 
 
 let db;
+const AppData = BaseDirectory.AppData
 
 const DB = {
   async initDB() {
-
-
     // 检查db文件是否存在,不存在则创建
-    const isDBExit = await exists('db.json', { dir: BaseDirectory.Resource });
+    
+    const isDBExit = await exists('db.json', { dir: AppData });
     if (!isDBExit) {
       await writeTextFile('db.json', JSON.stringify({
         todoList: [
@@ -70,10 +70,10 @@ const DB = {
           },
         ],
         settings: {autoStart: true,wechatNotificationEnabled:false,alwaysOnTop:false},
-      }), { dir: BaseDirectory.Resource });
+      }), { dir: AppData });
     }
 
-    const contents = await readTextFile('db.json', { dir: BaseDirectory.Resource });
+    const contents = await readTextFile('db.json', { dir: AppData});
     db = JSON.parse(contents)
 
     db.todoList.forEach(item => {
@@ -92,18 +92,18 @@ const DB = {
   },
   async set(key, value) {
     db[key] = value
-    await writeTextFile('db.json', JSON.stringify(db), { dir: BaseDirectory.Resource });
+    await writeTextFile('db.json', JSON.stringify(db), { dir: AppData });
   },
   async insert(key, value) {
     db[key].push(value)
-    await writeTextFile('db.json', JSON.stringify(db), { dir: BaseDirectory.Resource });
+    await writeTextFile('db.json', JSON.stringify(db), { dir: AppData });
   },
   async removeById(key, id) {
     const index = db[key].findIndex(item => item.id === id);
     if (index !== -1) {
       db[key].splice(index, 1);
     }
-    await writeTextFile('db.json', JSON.stringify(db), { dir: BaseDirectory.Resource });
+    await writeTextFile('db.json', JSON.stringify(db), { dir:AppData });
   },
   async groupby(key, prop) {
     const sortedArray = reverse(sortBy(db[key], prop));
