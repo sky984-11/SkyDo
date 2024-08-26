@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-30 15:53:35
- * @LastEditTime: 2024-08-23 17:14:54
+ * @LastEditTime: 2024-08-26 14:08:46
  * @FilePath: \SkyDo\ui\src\views\Settings.vue
 -->
 <template>
