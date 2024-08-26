@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-30 15:53:35
- * @LastEditTime: 2024-08-26 14:08:46
+ * @LastEditTime: 2024-08-26 14:36:22
  * @FilePath: \SkyDo\ui\src\views\Settings.vue
 -->
 <template>
@@ -37,12 +37,12 @@
         <img v-if="settings.wechatNotificationEnabled" style="margin-left: 25%;" src="/wechat.png"
           alt="扫码关注公众号，后面通过公众号实现微信提醒">
       </el-tooltip> -->
-      <!-- // "updater": {
-    //   "active": true,
-    //   "dialog": false,
-    //   "endpoints": ["https://github.com/sky984-11/SkyDo/releases/download/updater/update.json"],
-    //   "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDZDRkUyOTg0MUVCMUI3MTUKUldRVnQ3RWVoQ24rYkR3THQyV0dJK1pjdUVDazcwSG05OTlrankrSmVjRityaU1IM3JTN3l3QkcK%"
-    // }, -->
+      <!-- "updater": {
+      "active": true,
+      "dialog": false,
+      "endpoints": ["https://github.com/sky984-11/SkyDo/releases/download/updater/update.json"],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDZDRkUyOTg0MUVCMUI3MTUKUldRVnQ3RWVoQ24rYkR3THQyV0dJK1pjdUVDazcwSG05OTlrankrSmVjRityaU1IM3JTN3l3QkcK%"
+    }, -->
     </el-form>
   </div>
 </template>
