@@ -57,3 +57,10 @@ jobs:
                   releaseBody: 'See the assets to download and install this version.'
                   releaseDraft: true
                   prerelease: false
+
+            - name: Upload assets
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              # 运行自己的脚本
+              run: node scripts/updater.mjs
+          
