@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-25 09:18:01
- * @LastEditTime: 2024-02-05 11:14:32
+ * @LastEditTime: 2024-08-26 09:00:22
  * @FilePath: \SkyDo\ui\src\views\Todo.vue
 -->
 <template>
@@ -15,8 +15,8 @@
           <p v-if="index !== editIndex" :style="{ color: todo.isOverdue ? 'red' : 'white' }">{{ index + 1 }}.{{
             todo.content }}</p>
           <div class="edit" v-else>
-            <input v-model="todo.content" v-focus @click.stop="return false;" @keyup.27="cancel(index)" @keyup.13="edited"
-              spellcheck="false" @input="handleInputChange(index, $event)" />
+            <input v-model="todo.content" v-focus @click.stop="return false;" @keyup.27="cancel(index)"
+              @keyup.13="edited" spellcheck="false" @input="handleInputChange(index, $event)" />
             <i class="iconfont icon-select" @click.stop="edited"></i>
             <i class="iconfont icon-close" @click.stop="clear(index)"></i>
             <el-tooltip class="item" effect="dark" :content="todo.eta" :disabled="!todo.eta" placement="top">
@@ -38,7 +38,7 @@ import debounce from 'lodash/debounce';
 import DB from "@/utils/db";
 import { notification } from "@/utils/notification";
 import Wechat from "@/api/wechat";
-import { getNowDate, getNowDateTime,formatDateTime } from "@/utils/common";
+import { getNowDate, getNowDateTime, formatDateTime } from "@/utils/common";
 
 export default {
   name: "Todo",
@@ -48,40 +48,34 @@ export default {
   data() {
     return {
       todoList: null,
-      intervalId:null,
+      intervalId: null,
       drag: false,
       editIndex: -1,
       tempItem: null,
       dblclick: false,
       // 时间格式校验
-      datePattern:/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/
+      datePattern: /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/
 
     };
   },
-  props:{
-    settings:{
+  props: {
+    settings: {
       type: Object,
-      default:{}
+      default: {}
     }
   },
   methods: {
     // 定时检查eta时间
     checkEta() {
-      // console.log(this.settings)
       const now = new Date().getTime();
       this.todoList.forEach(todo => {
         // 已经设置了eta字段，并且eta字段时间格式正确，并且该待办事项没有过期
         if (todo.eta && this.datePattern.test(todo.eta) && !todo.isOverdue) {
           const eta = new Date(todo.eta).getTime();
-          
+
           if (now >= eta) {
             this.$set(todo, 'isOverdue', true); // 使用Vue的$set方法确保响应式更新
-              // 微信通知接口
-              if (this.settings.wechatNotificationEnabled && this.settings.wechatNotificationId != "") {
-                Wechat.notifier(this.settings.wechatNotificationId, `任务${todo.content}已过期,ETA时间:${todo.eta}`)
-              }else{
-                notification('任务过期提醒', `任务${todo.content}已过期,ETA时间:${todo.eta}`);
-              }
+            notification('任务过期提醒', `任务${todo.content}已过期,ETA时间:${todo.eta}`);
           } else {
             todo.isOverdue = false;
           }
@@ -95,6 +89,16 @@ export default {
         console.error(error);
       }
     },
+
+    // 语音播报初始化
+    initSpeak() {
+      let utterThis = new SpeechSynthesisUtterance();
+utterThis.text = '书以启智,技于谋生,活出斜杠';
+utterThis.lang = 'en-US';//汉语
+utterThis.rate = 0.7;//语速
+speechSynthesis.speak(utterThis);
+    },
+
     getTodoList() {
       const list = DB.get("todoList");
       console.log(list)
@@ -259,15 +263,17 @@ export default {
     },
   },
   mounted() {
+    this.checkEta();
     this.intervalId = setInterval(() => {
       this.checkEta(); // 每分钟调用一次检查ETA的函数
-    }, 60 * 1000); // 设置为每分钟执行一次
+    }, 30 * 1000); // 设置为每30s执行一次
   },
   beforeDestroy() {
-  clearInterval(this.intervalId);
-},
+    clearInterval(this.intervalId);
+  },
   created() {
     this.initTodoList();
+    this.initSpeak()
   },
   directives: {
     focus: {
@@ -279,7 +285,7 @@ export default {
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .root {
   width: 100%;
   min-height: 100%;
