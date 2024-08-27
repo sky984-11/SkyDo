@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: todo list
  * @Date: 2024-01-02 10:08:58
- * @LastEditTime: 2024-08-26 17:46:03
+ * @LastEditTime: 2024-08-26 18:00:16
  * @FilePath: \SkyDo\TODO.md
 -->
 ## 优先级标识
@@ -78,6 +78,7 @@
 - [x] 🔴 增加github打包功能
 
 ### V0.5.21
+- [ ] 🔴 版本更新推送
 - [ ] 🔴 数据导出
 
 
