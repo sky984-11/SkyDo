@@ -2,46 +2,89 @@
  * @Description: 
  * @Author: sky
  * @Date: 2024-08-26 17:55:05
- * @LastEditTime: 2024-08-26 17:55:30
+ * @LastEditTime: 2024-08-27 08:56:55
  * @LastEditors: sky
  */
-// 注意要安装@actions/github依赖
-import { context, getOctokit } from "@actions/github";
-import { readFile } from "node:fs/promises";
-
-// 在容器中可以通过env环境变量来获取参数
-const octokit = getOctokit(process.env.GITHUB_TOKEN);
-
-const updateRelease = async () => {
-  // 获取updater tag的release
-  const { data: release } = await octokit.rest.repos.getReleaseByTag({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    tag: "updater",
+// @ts-nocheck
+import fetch from 'node-fetch';
+import { getOctokit, context } from '@actions/github';
+ 
+const UPDATE_TAG_NAME = 'updater';
+const UPDATE_FILE_NAME = 'update.json';
+ 
+const getSignature = async (url) => {
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/octet-stream' }
   });
-  // 删除旧的的文件
-  const deletePromises = release.assets
-    .filter((item) => item.name === "latest.json")
-    .map(async (item) => {
-      await octokit.rest.repos.deleteReleaseAsset({
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        asset_id: item.id,
-      });
-    });
-
-  await Promise.all(deletePromises);
-
-  // 上传新的文件
-  const file = await readFile("latest.json", { encoding: "utf-8" });
-
-  await octokit.rest.repos.uploadReleaseAsset({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    release_id: release.id,
-    name: "latest.json",
-    data: file,
-  });
+  return response.text();
 };
-
-updateRelease();
+ 
+const updateData = {
+  name: '',
+  pub_date: new Date().toISOString(),
+  platforms: {
+    win64: { signature: '', url: '' },
+    linux: { signature: '', url: '' },
+    darwin: { signature: '', url: '' },
+    'linux-x86_64': { signature: '', url: '' },
+    'windows-x86_64': { signature: '', url: '' }
+  }
+};
+ 
+const octokit = getOctokit(process.env.GITHUB_TOKEN);
+const options = { owner: context.repo.owner, repo: context.repo.repo };
+ 
+const { data: release } = await octokit.rest.repos.getLatestRelease(options);
+updateData.name = release.tag_name;
+// eslint-disable-next-line camelcase
+for (const { name, browser_download_url } of release.assets) {
+  if (name.endsWith('.msi.zip')) {
+    // eslint-disable-next-line camelcase
+    updateData.platforms.win64.url = browser_download_url;
+    // eslint-disable-next-line camelcase
+    updateData.platforms['windows-x86_64'].url = browser_download_url;
+  } else if (name.endsWith('.msi.zip.sig')) {
+    // eslint-disable-next-line no-await-in-loop
+    const signature = await getSignature(browser_download_url);
+    updateData.platforms.win64.signature = signature;
+    updateData.platforms['windows-x86_64'].signature = signature;
+  } else if (name.endsWith('.app.tar.gz')) {
+    // eslint-disable-next-line camelcase
+    updateData.platforms.darwin.url = browser_download_url;
+  } else if (name.endsWith('.app.tar.gz.sig')) {
+    // eslint-disable-next-line no-await-in-loop
+    const signature = await getSignature(browser_download_url);
+    updateData.platforms.darwin.signature = signature;
+  } else if (name.endsWith('.AppImage.tar.gz')) {
+    // eslint-disable-next-line camelcase
+    updateData.platforms.linux.url = browser_download_url;
+    // eslint-disable-next-line camelcase
+    updateData.platforms['linux-x86_64'].url = browser_download_url;
+  } else if (name.endsWith('.AppImage.tar.gz.sig')) {
+    // eslint-disable-next-line no-await-in-loop
+    const signature = await getSignature(browser_download_url);
+    updateData.platforms.linux.signature = signature;
+    updateData.platforms['linux-x86_64'].signature = signature;
+  }
+}
+ 
+const { data: updater } = await octokit.rest.repos.getReleaseByTag({
+  ...options,
+  tag: UPDATE_TAG_NAME
+});
+ 
+for (const { id, name } of updater.assets) {
+  if (name === UPDATE_FILE_NAME) {
+    // eslint-disable-next-line no-await-in-loop
+    await octokit.rest.repos.deleteReleaseAsset({ ...options, asset_id: id });
+    break;
+  }
+}
+ 
+await octokit.rest.repos.uploadReleaseAsset({
+  ...options,
+  release_id: updater.id,
+  name: UPDATE_FILE_NAME,
+  data: JSON.stringify(updateData)
+});
