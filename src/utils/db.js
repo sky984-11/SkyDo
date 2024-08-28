@@ -10,13 +10,13 @@ import reverse from 'lodash/reverse';
 import sortBy from 'lodash/sortBy';
 import groupBy from 'lodash/groupBy';
 
-// import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx';
 // import exportCsv from './csv'
 
-import { BaseDirectory, exists, writeTextFile, readTextFile } from '@tauri-apps/api/fs';
+import { BaseDirectory, exists, writeTextFile, readTextFile,writeBinaryFile } from '@tauri-apps/api/fs';
 
 import { getNowDate, getNowDateTime } from "@/utils/common";
-
+import { save,message } from '@tauri-apps/api/dialog';
 
 let db;
 const AppData = BaseDirectory.AppData
@@ -113,22 +113,36 @@ const DB = {
 
   },
 
-  async exportExecl(){
-    // const todoList = db.todoList
-    // const doneList = db.doneList
-
-    // const ws = XLSX.utils.json_to_sheet(todoList);
-    // const ws1 = XLSX.utils.json_to_sheet(doneList);
-
-    // const wb = XLSX.utils.book_new();
-
-    // XLSX.utils.book_append_sheet(wb, ws, "todo");
-    // XLSX.utils.book_append_sheet(wb, ws1, "done");
+  async exportExecl() {
+    const todoList = db.todoList;
+    const doneList = db.doneList;
   
-    // XLSX.writeFile(wb, 'SkyDo.xlsx');
-    const data = [{name:'liupeng',age:22,gender:'dsgf'}]
-    exportCsv(['name','age','gender'],data,'SkyDo.csv')
-  },
+    // 将对象数据转换为工作表
+    const wsTodo = XLSX.utils.json_to_sheet(todoList);
+    const wsDone = XLSX.utils.json_to_sheet(doneList);
+  
+    // 创建新的工作簿并附加工作表
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, wsTodo, "todo");
+    XLSX.utils.book_append_sheet(wb, wsDone, "done");
+  
+    // 将工作簿转换为二进制数据
+    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+  
+    // 使用 Tauri 的 writeBinaryFile 写入 Excel 文件
+    const filePath = await save({
+      defaultPath:'SkyDo.xlsx',
+      filters: [{
+        name: 'xls*',
+        extensions: ['xls', 'xlsx']
+      }]
+    });
+    await writeBinaryFile({
+      path: filePath,
+      contents: new Uint8Array(wbout),
+    });
+    await message('Excel 文件已成功导出,请查看文件:' + filePath);
+  }
 };
 
 export default DB;
