@@ -12,7 +12,7 @@
       </div>
       <!-- 设置功能，后面添加tabs->应用设置->开机自启，通过路由实现，跳转后需要一个开关返回上级 -->
       <div class="tools" data-tauri-drag-region>
-        <i class="el-icon-document" @click="exportExecl()"></i>
+        <!-- <i class="el-icon-document" @click="exportExecl()"></i> -->
         <i class="el-icon-setting" @click="settingsRouter"></i>
       </div>
     </div>

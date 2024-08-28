@@ -10,7 +10,8 @@ import reverse from 'lodash/reverse';
 import sortBy from 'lodash/sortBy';
 import groupBy from 'lodash/groupBy';
 
-import * as XLSX from 'xlsx';
+// import * as XLSX from 'xlsx';
+// import exportCsv from './csv'
 
 import { BaseDirectory, exists, writeTextFile, readTextFile } from '@tauri-apps/api/fs';
 
@@ -113,18 +114,20 @@ const DB = {
   },
 
   async exportExecl(){
-    const todoList = db.todoList
-    const doneList = db.doneList
+    // const todoList = db.todoList
+    // const doneList = db.doneList
 
-    const ws = XLSX.utils.json_to_sheet(todoList);
-    const ws1 = XLSX.utils.json_to_sheet(doneList);
+    // const ws = XLSX.utils.json_to_sheet(todoList);
+    // const ws1 = XLSX.utils.json_to_sheet(doneList);
 
-    const wb = XLSX.utils.book_new();
+    // const wb = XLSX.utils.book_new();
 
-    XLSX.utils.book_append_sheet(wb, ws, "todo");
-    XLSX.utils.book_append_sheet(wb, ws1, "done");
+    // XLSX.utils.book_append_sheet(wb, ws, "todo");
+    // XLSX.utils.book_append_sheet(wb, ws1, "done");
   
-    XLSX.writeFile(wb, 'SkyDo.xlsx');
+    // XLSX.writeFile(wb, 'SkyDo.xlsx');
+    const data = [{name:'liupeng',age:22,gender:'dsgf'}]
+    exportCsv(['name','age','gender'],data,'SkyDo.csv')
   },
 };
 

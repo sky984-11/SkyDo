@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-25 09:18:01
- * @LastEditTime: 2024-08-26 09:00:22
+ * @LastEditTime: 2024-08-27 17:46:56
  * @FilePath: \SkyDo\ui\src\views\Todo.vue
 -->
 <template>
@@ -37,7 +37,7 @@ import debounce from 'lodash/debounce';
 
 import DB from "@/utils/db";
 import { notification } from "@/utils/notification";
-import Wechat from "@/api/wechat";
+
 import { getNowDate, getNowDateTime, formatDateTime } from "@/utils/common";
 
 export default {
@@ -68,7 +68,9 @@ export default {
     // 定时检查eta时间
     checkEta() {
       const now = new Date().getTime();
-      this.todoList.forEach(todo => {
+      console.log(this.todoList)
+      if(this.todoList){
+        this.todoList.forEach(todo => {
         // 已经设置了eta字段，并且eta字段时间格式正确，并且该待办事项没有过期
         if (todo.eta && this.datePattern.test(todo.eta) && !todo.isOverdue) {
           const eta = new Date(todo.eta).getTime();
@@ -81,6 +83,8 @@ export default {
           }
         }
       });
+      }
+
     },
     async initTodoList() {
       try {
@@ -92,11 +96,11 @@ export default {
 
     // 语音播报初始化
     initSpeak() {
-      let utterThis = new SpeechSynthesisUtterance();
-utterThis.text = '书以启智,技于谋生,活出斜杠';
-utterThis.lang = 'en-US';//汉语
-utterThis.rate = 0.7;//语速
-speechSynthesis.speak(utterThis);
+      // let utterThis = new SpeechSynthesisUtterance();
+      // utterThis.text = '书以启智,技于谋生,活出斜杠';
+      // utterThis.lang = 'en-US';//汉语
+      // utterThis.rate = 0.7;//语速
+      // speechSynthesis.speak(utterThis);
     },
 
     getTodoList() {
