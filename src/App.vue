@@ -28,12 +28,13 @@
 <script>
 import { isDev } from '@/utils/env.js';
 import DB from "@/utils/db";
-import { BaseDirectory, exists, readBinaryFile, writeBinaryFile } from '@tauri-apps/api/fs';
+import { BaseDirectory, exists, readBinaryFile } from '@tauri-apps/api/fs';
+import { getVersion,getName } from '@tauri-apps/api/app';
 
 export default {
   data() {
     return {
-      appName: 'SkyDo',
+      appName: '',
       ignoreMouse: false,
       // 背景图片
       backgroundImage: null,
@@ -79,6 +80,10 @@ export default {
 
   async initList() {
     try {
+      const appName = await getName();
+      const appVersion = await getVersion();
+      this.appName = appName + ' v' + appVersion;
+
       await DB.initDB();
       this.getSettingsList();
     } catch (error) {

@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-25 09:18:01
- * @LastEditTime: 2024-08-27 17:46:56
+ * @LastEditTime: 2024-08-29 08:43:48
  * @FilePath: \SkyDo\ui\src\views\Todo.vue
 -->
 <template>
@@ -16,7 +16,7 @@
             todo.content }}</p>
           <div class="edit" v-else>
             <input v-model="todo.content" v-focus @click.stop="return false;" @keyup.27="cancel(index)"
-              @keyup.13="edited" spellcheck="false" @input="handleInputChange(index, $event)" />
+              @keyup.13="edited" spellcheck="false"  @input="handleInputChange(index, $event)" />
             <i class="iconfont icon-select" @click.stop="edited"></i>
             <i class="iconfont icon-close" @click.stop="clear(index)"></i>
             <el-tooltip class="item" effect="dark" :content="todo.eta" :disabled="!todo.eta" placement="top">
