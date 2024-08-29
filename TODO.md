@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: todo list
  * @Date: 2024-01-02 10:08:58
- * @LastEditTime: 2024-08-29 08:44:31
+ * @LastEditTime: 2024-08-29 10:27:37
  * @FilePath: \SkyDo\TODO.md
 -->
 ## 优先级标识
@@ -90,6 +90,7 @@
 - [ ] 🔴 声音播报功能(文本转音频？+ howler)
 
 - [ ] 🟢 程序悬浮窗口功能
+- [ ] 🟢 程序README截图更新
 - [ ] 🔴 定时任务功能
 - [ ] 🔴 增加联网模式
 - [ ] 🔴 专项代办(可设置多人ID)

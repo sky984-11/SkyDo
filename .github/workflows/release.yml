@@ -51,6 +51,7 @@ jobs:
 
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
               with:
                   tagName: ${{ github.ref_name }} # This only works if your workflow triggers on new tags.
                   releaseName: 'App Name v__VERSION__' # tauri-action replaces \_\_VERSION\_\_ with the app version.
@@ -58,9 +59,23 @@ jobs:
                   releaseDraft: true
                   prerelease: false
 
-            # - name: Upload assets
-            #   env:
-            #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            #   # 运行自己的脚本
-            #   run: node scripts/updater.mjs
+
           
+    update:
+        needs: release
+        runs-on: macos-latest
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v2
+ 
+          - name: Install Node
+            uses: actions/setup-node@v1
+            with:
+              node-version: 20
+ 
+          - run: pnpm
+ 
+          - name: Create Update
+            run: pnpm update
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

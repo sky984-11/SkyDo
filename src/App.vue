@@ -29,9 +29,12 @@
 import { isDev } from '@/utils/env.js';
 import DB from "@/utils/db";
 import { BaseDirectory, exists, readBinaryFile } from '@tauri-apps/api/fs';
-import { getVersion,getName } from '@tauri-apps/api/app';
+import { getVersion, getName } from '@tauri-apps/api/app';
+import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
 
 export default {
+
+  
   data() {
     return {
       appName: '',
@@ -52,6 +55,7 @@ export default {
     }
   },
   methods: {
+    
     settingsRouter() {
       if (this.$route.path !== '/settings') {
         this.$router.push({ name: 'Settings' }).catch(err => {
@@ -64,52 +68,55 @@ export default {
       }
     },
 
-    exportExecl() { 
+    exportExecl() {
       DB.exportExecl();
     },
 
 
-  async handleSetBackgroundImage(dir, filename) {
-    const readImages = await readBinaryFile(dir + '/' + filename, { dir: BaseDirectory.AppData });
-    let blob = new Blob([readImages]);
-    this.backgroundImage = URL.createObjectURL(blob);
-    this.settings['imageName'] = filename;
-    this.settings['fileList'] = [{ name: filename }]
-    DB.set("settings", this.settings);
-  },
-
-  async initList() {
-    try {
-      const appName = await getName();
-      const appVersion = await getVersion();
-      this.appName = appName + ' v' + appVersion;
-
-      await DB.initDB();
-      this.getSettingsList();
-    } catch (error) {
-      console.error(error);
-    }
-  },
-
-  async getSettingsList() {
-    const list = DB.get("settings");
-    this.settings = list
-    let isImagesExit = await exists('images/' + list.imageName, { dir: BaseDirectory.AppData });
-    if (isImagesExit) {
-      const readImages = await readBinaryFile('images/' + list.imageName, { dir: BaseDirectory.AppData });
+    async handleSetBackgroundImage(dir, filename) {
+      const readImages = await readBinaryFile(dir + '/' + filename, { dir: BaseDirectory.AppData });
       let blob = new Blob([readImages]);
       this.backgroundImage = URL.createObjectURL(blob);
-    }
-  },
-},
-created() {
-  // 正式版本禁用右键
-  if (!isDev()) {
-    window.addEventListener("contextmenu", (e) => e.preventDefault(), false);
-  }
+      this.settings['imageName'] = filename;
+      this.settings['fileList'] = [{ name: filename }]
+      DB.set("settings", this.settings);
+    },
 
-  this.initList()
-},
+    async initList() {
+      try {
+        const update = await checkUpdate();
+        console.log(update)
+        const appName = await getName();
+        const appVersion = await getVersion();
+        this.appName = appName + ' v' + appVersion;
+
+        await DB.initDB();
+        this.getSettingsList();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async getSettingsList() {
+      const list = DB.get("settings");
+      this.settings = list
+      let isImagesExit = await exists('images/' + list.imageName, { dir: BaseDirectory.AppData });
+      if (isImagesExit) {
+        const readImages = await readBinaryFile('images/' + list.imageName, { dir: BaseDirectory.AppData });
+        let blob = new Blob([readImages]);
+        this.backgroundImage = URL.createObjectURL(blob);
+      }
+    },
+  },
+  created() {
+    // 正式版本禁用右键
+    if (!isDev()) {
+      window.addEventListener("contextmenu", (e) => e.preventDefault(), false);
+    }
+
+
+    this.initList()
+  },
 };
 </script>
 
