@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-30 15:53:35
- * @LastEditTime: 2024-08-26 14:36:22
+ * @LastEditTime: 2024-08-30 13:11:07
  * @FilePath: \SkyDo\ui\src\views\Settings.vue
 -->
 <template>
@@ -39,9 +39,11 @@
       </el-tooltip> -->
       <!-- "updater": {
       "active": true,
-      "dialog": false,
-      "endpoints": ["https://github.com/sky984-11/SkyDo/releases/download/updater/update.json"],
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDZDRkUyOTg0MUVCMUI3MTUKUldRVnQ3RWVoQ24rYkR3THQyV0dJK1pjdUVDazcwSG05OTlrankrSmVjRityaU1IM3JTN3l3QkcK%"
+      "endpoints": [
+        "https://github.com/sky984-11/SkyDo/releases/download/untagged-ed182f46c0448e46f488/latest.json"
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDZDRkUyOTg0MUVCMUI3MTUKUldRVnQ3RWVoQ24rYkR3THQyV0dJK1pjdUVDazcwSG05OTlrankrSmVjRityaU1IM3JTN3l3QkcK"
     }, -->
     </el-form>
   </div>

@@ -11,14 +11,6 @@
     "version": "0.6.7"
   },
   "tauri": {
-    "updater": {
-      "active": true,
-      "endpoints": [
-        "https://github.com/sky984-11/SkyDo/releases/download/untagged-ed182f46c0448e46f488/latest.json"
-      ],
-      "dialog": true,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDZDRkUyOTg0MUVCMUI3MTUKUldRVnQ3RWVoQ24rYkR3THQyV0dJK1pjdUVDazcwSG05OTlrankrSmVjRityaU1IM3JTN3l3QkcK"
-    },
     "allowlist": {
       "all": false,
       "window": {
