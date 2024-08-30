@@ -84,10 +84,9 @@ const DB = {
     db.doneList.forEach(item => {
       item.id = uniqueId();
     });
-
-
-
   },
+
+  
   get(key) {
     return db[key];
   },
@@ -144,5 +143,5 @@ const DB = {
     await message('Excel 文件已成功导出,请查看文件:' + filePath);
   }
 };
-
+DB.initDB()
 export default DB;

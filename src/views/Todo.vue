@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-25 09:18:01
- * @LastEditTime: 2024-08-29 08:43:48
+ * @LastEditTime: 2024-08-30 08:45:32
  * @FilePath: \SkyDo\ui\src\views\Todo.vue
 -->
 <template>
@@ -105,7 +105,6 @@ export default {
 
     getTodoList() {
       const list = DB.get("todoList");
-      console.log(list)
       this.todoList = list;
     },
     add() {

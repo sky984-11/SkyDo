@@ -30,7 +30,7 @@ import { isDev } from '@/utils/env.js';
 import DB from "@/utils/db";
 import { BaseDirectory, exists, readBinaryFile } from '@tauri-apps/api/fs';
 import { getVersion, getName } from '@tauri-apps/api/app';
-import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
+// import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
 
 export default {
 
@@ -84,8 +84,8 @@ export default {
 
     async initList() {
       try {
-        const update = await checkUpdate();
-        console.log(update)
+        // const update = await checkUpdate();
+        // console.log(update)
         const appName = await getName();
         const appVersion = await getVersion();
         this.appName = appName + ' v' + appVersion;
