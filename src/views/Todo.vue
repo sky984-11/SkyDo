@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-25 09:18:01
- * @LastEditTime: 2024-08-30 08:45:32
+ * @LastEditTime: 2024-08-30 09:10:01
  * @FilePath: \SkyDo\ui\src\views\Todo.vue
 -->
 <template>
@@ -16,7 +16,7 @@
             todo.content }}</p>
           <div class="edit" v-else>
             <input v-model="todo.content" v-focus @click.stop="return false;" @keyup.27="cancel(index)"
-              @keyup.13="edited" spellcheck="false"  @input="handleInputChange(index, $event)" />
+              @keyup.13="edited" spellcheck="false" @input="handleInputChange(index, $event)" />
             <i class="iconfont icon-select" @click.stop="edited"></i>
             <i class="iconfont icon-close" @click.stop="clear(index)"></i>
             <el-tooltip class="item" effect="dark" :content="todo.eta" :disabled="!todo.eta" placement="top">
@@ -69,20 +69,20 @@ export default {
     checkEta() {
       const now = new Date().getTime();
       console.log(this.todoList)
-      if(this.todoList){
+      if (this.todoList) {
         this.todoList.forEach(todo => {
-        // 已经设置了eta字段，并且eta字段时间格式正确，并且该待办事项没有过期
-        if (todo.eta && this.datePattern.test(todo.eta) && !todo.isOverdue) {
-          const eta = new Date(todo.eta).getTime();
+          // 已经设置了eta字段，并且eta字段时间格式正确，并且该待办事项没有过期
+          if (todo.eta && this.datePattern.test(todo.eta) && !todo.isOverdue) {
+            const eta = new Date(todo.eta).getTime();
 
-          if (now >= eta) {
-            this.$set(todo, 'isOverdue', true); // 使用Vue的$set方法确保响应式更新
-            notification('任务过期提醒', `任务${todo.content}已过期,ETA时间:${todo.eta}`);
-          } else {
-            todo.isOverdue = false;
+            if (now >= eta) {
+              this.$set(todo, 'isOverdue', true); // 使用Vue的$set方法确保响应式更新
+              notification('任务过期提醒', `任务${todo.content}已过期,ETA时间:${todo.eta}`);
+            } else {
+              todo.isOverdue = false;
+            }
           }
-        }
-      });
+        });
       }
 
     },
@@ -96,11 +96,7 @@ export default {
 
     // 语音播报初始化
     initSpeak() {
-      // let utterThis = new SpeechSynthesisUtterance();
-      // utterThis.text = '书以启智,技于谋生,活出斜杠';
-      // utterThis.lang = 'en-US';//汉语
-      // utterThis.rate = 0.7;//语速
-      // speechSynthesis.speak(utterThis);
+
     },
 
     getTodoList() {
