@@ -21,7 +21,8 @@
 ## 使用指南
 
 ### Todo界面
-![image](https://github.com/sky984-11/SkyDo/assets/58068214/38a11fd6-8bd5-48b1-90ee-fcd383c36e0f)
+![image](https://github.com/user-attachments/assets/ee8bff89-57f8-4e0a-af29-1cf4a35a98a5)
+
 
 
 ### Done
