@@ -25,11 +25,13 @@
 
 
 ### Done
-![image](https://github.com/sky984-11/SkyDo/assets/58068214/220a2bfb-bac0-4696-aa72-3efab54dbbba)
+![image](https://github.com/user-attachments/assets/f9a19c39-54b9-492b-a40b-f97f1458e7a1)
+
 
 
 ### settings
-![image](https://github.com/sky984-11/SkyDo/assets/58068214/61e3e525-4097-46dc-b0b9-0cec186a4a51)
+![image](https://github.com/user-attachments/assets/32c6c9bb-5f72-4a11-b287-b3ac6f125def)
+
 
 
 ## 后续开发
