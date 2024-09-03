@@ -16,20 +16,24 @@
 4. 所有数据均存储在本地，避免安全隐患
 5. 任务过期声音提醒(todo)
 6. 数据一键导出
+7. 支持任务拖拽
 
 
 ## 使用指南
 
 ### Todo界面
-![image](https://github.com/sky984-11/SkyDo/assets/58068214/38a11fd6-8bd5-48b1-90ee-fcd383c36e0f)
+![image](https://github.com/user-attachments/assets/ee8bff89-57f8-4e0a-af29-1cf4a35a98a5)
+
 
 
 ### Done
-![image](https://github.com/sky984-11/SkyDo/assets/58068214/220a2bfb-bac0-4696-aa72-3efab54dbbba)
+![image](https://github.com/user-attachments/assets/f9a19c39-54b9-492b-a40b-f97f1458e7a1)
+
 
 
 ### settings
-![image](https://github.com/sky984-11/SkyDo/assets/58068214/61e3e525-4097-46dc-b0b9-0cec186a4a51)
+![image](https://github.com/user-attachments/assets/32c6c9bb-5f72-4a11-b287-b3ac6f125def)
+
 
 
 ## 后续开发

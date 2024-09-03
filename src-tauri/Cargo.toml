@@ -18,7 +18,7 @@ tauri-build = { version = "1.5.0", features = [] }
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 # 正式版本需要去掉"devtools"
-tauri = { version = "1.5.3", features = [ "updater", "dialog-all", "process-relaunch", "notification-all", "shell-all", "fs-all", "window-all", "system-tray", "devtools"] }
+tauri = { version = "1.5.3", features = [ "dialog-all", "process-relaunch", "notification-all", "shell-all", "fs-all", "window-all", "system-tray", "devtools"] }
 # tauri-plugin-positioner = {version = "1.0", features = ["system-tray"] }
 # 开机自启插件
 tauri-plugin-autostart = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }

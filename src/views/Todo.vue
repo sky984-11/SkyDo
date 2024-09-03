@@ -220,19 +220,19 @@ export default {
       }
     },
     done(event, index) {
-      if (this.editIndex !== -1) return;
+    if (this.editIndex !== -1 || this.dblclick) return;
 
-      this.dblclick = true;
-      setTimeout(() => { this.dblclick = false; }, 500);
+    this.dblclick = true;
+    setTimeout(() => { this.dblclick = false; }, 500);
 
-      CursorSpecialEffects.handleMouseDown(event);
+    CursorSpecialEffects.handleMouseDown(event);
 
-      const doneItem = Object.assign({ done_date: getNowDate(), done_datetime: getNowDateTime() }, this.todoList[index]);
+    const doneItem = Object.assign({ done_date: getNowDate(), done_datetime: getNowDateTime() }, this.todoList[index]);
 
-      DB.insert("doneList", doneItem);
-      this.todoList.splice(index, 1);
-      DB.set("todoList", this.todoList);
-    },
+    DB.insert("doneList", doneItem);
+    this.todoList.splice(index, 1);
+    DB.set("todoList", this.todoList);
+  },
 
 
     // 监听输入的内容，如果输入 @开头则在后面增加时间

@@ -1,24 +1,11 @@
 <template>
-  <div class="root"  @click.stop="toggleEditId()">
+  <div class="root">
     <div class="list" v-for="(value, key) in doneGroupList" :key="key">
       <div class="group">{{ getDateStr(key) }}</div>
-      <div
-        class="item"
-        v-for="(done, index) in value"
-        :key="done.id"
-        @click.stop="toggleEditId(done.id)"
-      >
+      <div class="item" v-for="(done, index) in value" :key="done.id" @click.stop="toggleEditId(done.id)">
         <p>{{ index + 1 }}.{{ done.content }}</p>
-        <i
-          v-if="editId === done.id"
-          class="iconfont icon-back"
-          @click.stop="restore(done)"
-        ></i>
-        <i
-          v-if="editId === done.id"
-          class="iconfont icon-close"
-          @click.stop="remove(done)"
-        ></i>
+        <i v-if="editId === done.id" class="iconfont icon-back" @click.stop="restore(done)"></i>
+        <i v-if="editId === done.id" class="iconfont icon-close" @click.stop="remove(done)"></i>
       </div>
     </div>
   </div>
@@ -29,6 +16,7 @@
 <script>
 import DB from "@/utils/db";
 import { getDateStr } from "@/utils/common";
+
 export default {
   name: "Done",
   data() {
@@ -48,27 +36,36 @@ export default {
     getDateStr,
     async getDoneList() {
       const list = await DB.groupby("doneList", "done_date");
-      console.log(list)
+      console.log("doneGroupList", list)
       this.doneGroupList = list;
-      },
+    },
     toggleEditId(id) {
+      console.log(id)
       this.editId = this.editId === id ? "" : id;
     },
-    restore(done) {
-      DB.insert("todoList", {
-        todo_date: done.todo_date,
-        todo_datetime: done.todo_datetime,
-        content: done.content,
-      });
+    async restore(done) {
+      try {
+        // mv doneList to todoList
+        await DB.restoreById(this.editId);
 
-      DB.removeById("doneList", done.id);
+        // 从 doneList 删除已完成的数据
+        await DB.removeById("doneList", this.editId);
 
-      this.getDoneList();
+        // 重新获取更新后的数据列表
+        await this.getDoneList();
+
+        // 清除编辑状态
+        this.toggleEditId("");
+      } catch (error) {
+        console.error("数据恢复过程中出错: ", error);
+      }
     },
-    remove(done) {
-      DB.removeById("doneList", done.id);
 
+
+    remove(done) {
+      DB.removeById("doneList", this.editId);
       this.getDoneList();
+      this.toggleEditId(""); // 清除编辑状态
     },
   },
   created() {
@@ -77,7 +74,7 @@ export default {
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .root {
   width: 100%;
   min-height: 100%;
