@@ -64,15 +64,23 @@ jobs:
       needs: [release]
 
       steps:
-        - uses: actions/checkout@v4
-        - run: yarn
-        - run: yarn updater
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 检出代码
+      - uses: actions/checkout@v4
 
-        - name: Deploy install.json
-          uses: peaceiris/actions-gh-pages@v4
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_dir: ./updater
-            force_orphan: true
+      # 安装依赖
+      - name: Install dependencies
+        run: yarn
+
+      # 运行 updater 脚本
+      - name: Run updater script
+        run: yarn updater
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 部署 install.json
+      - name: Deploy install.json
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./updater
+          force_orphan: true
