@@ -71,6 +71,10 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      # 安装node-fetch
+      - name: Install node-fetch
+        run: yarn add node-fetch
+
       # 运行 updater 脚本
       - name: Run updater script
         run: yarn updater
