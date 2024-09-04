@@ -1,5 +1,5 @@
 # Updater Log
-## v0.5.1
+## v0.5.2
 ## v0.5.0
 
 test
