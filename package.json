@@ -1,7 +1,7 @@
 {
   "name": "skydo",
   "description": "Vue2 JavaScript Starter Project For Vite.",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "author": {
     "name": "ElanYoung",
@@ -25,7 +25,9 @@
     "stylelint": "stylelint src/**/*.{html,vue,sass,scss,less} --cache --cache-location node_modules/.cache/stylelint/",
     "stylelint:fix": "stylelint src/**/*.{html,vue,sass,scss,less} --cache --cache-location node_modules/.cache/stylelint/ --fix",
     "prepare": "husky install",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "updater": "node scripts/updater.mjs",
+    "release": "node scripts/release.mjs"
   },
   "dependencies": {
     "@tauri-apps/api": "^1.5.2",
