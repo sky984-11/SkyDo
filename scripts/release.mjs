@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: sky
  * @Date: 2024-09-04 09:27:26
- * @LastEditTime: 2024-09-04 13:51:18
+ * @LastEditTime: 2024-09-04 14:00:59
  * @LastEditors: sky
  */
 // scripts/release.mjs
@@ -44,7 +44,7 @@ async function release() {
 
     const nextTag = `v${nextVersion}`;
     await updatelog(nextTag, 'release');
-    tauriConf.package.version = nextTag;
+    tauriConf.package.version = nextVersion;
     fs.writeFileSync(tauriConfPath, JSON.stringify(tauriConf, null, 2));
     // 将新版本写入 package.json 文件
     fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2));
