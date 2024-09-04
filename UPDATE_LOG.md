@@ -1,5 +1,7 @@
 # Updater Log
+## v0.5.0
 
+test
 ## v0.2.0
 
 - feat: xxx
