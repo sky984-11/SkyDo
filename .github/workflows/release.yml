@@ -70,9 +70,14 @@ jobs:
             with:
               node-version: 20
  
-          - run: pnpm
- 
-          - name: Create Update
+
+          - name: Install PNPM
+            run: npm i -g pnpm
+
+          - name: Install dependencies
+            run: pnpm install
+
+          - name: Update dependencies
             run: pnpm update
             env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
