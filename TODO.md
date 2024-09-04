@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: todo list
  * @Date: 2024-01-02 10:08:58
- * @LastEditTime: 2024-08-30 08:54:20
+ * @LastEditTime: 2024-09-04 08:23:53
  * @FilePath: \SkyDo\TODO.md
 -->
 ## 优先级标识
@@ -94,3 +94,4 @@
 - [ ] 🔴 专项代办(可设置多人ID)
 - [ ] 🔴 接入飞书，企业微信，邮箱等平台
 - [ ] 🟢 增加加密模式
+- [ ] 🟢 开机自启动后置顶失效
