@@ -75,6 +75,10 @@ jobs:
       - name: Install node-fetch
         run: yarn add node-fetch
 
+      # 安装@actions/github
+      - name: Install @actions/github
+        run: yarn add @actions/github
+
       # 运行 updater 脚本
       - name: Run updater script
         run: yarn updater
