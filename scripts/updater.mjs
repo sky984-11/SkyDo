@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: sky
  * @Date: 2024-08-26 17:55:05
- * @LastEditTime: 2024-09-06 17:36:40
+ * @LastEditTime: 2024-09-06 21:31:34
  * @LastEditors: sky
  */
 // 注意要安装@actions/github依赖
@@ -15,7 +15,19 @@ const octokit = getOctokit(process.env.GITHUB_TOKEN);
 
 
 
+const getLatestDraftRelease = async () => {
+  // 列出所有release
+  const { data: releases } = await octokit.rest.repos.listReleases({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+  });
 
+  // 筛选出草稿状态的release，并按创建时间降序排序以找到最新的草稿release
+  const draftReleases = releases.filter(release => release.draft).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+  // 返回第一个元素即为最新的草稿release
+  return draftReleases[0] || null;
+};
 
 
 const updateRelease = async () => {
@@ -26,11 +38,11 @@ const updateRelease = async () => {
     tag: "updater",
   });
 
-  const { data: Latest } = await octokit.rest.repos.getLatestRelease({ owner: context.repo.owner, repo: context.repo.repo });
+  const Latest = await getLatestDraftRelease();
 
   // 需要生成的静态 json 文件数据，根据自己的需要进行调整
   const updateData = {
-    version: Latest.tag_name,
+    version: Latest.tag_name.replace(/^v/, ''),
     // 使用 UPDATE_LOG.md，如果不需要版本更新日志，则将此字段置空
     notes: "",
     pub_date: new Date().toISOString(),
