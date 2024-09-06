@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-25 09:18:01
- * @LastEditTime: 2024-08-30 09:10:01
+ * @LastEditTime: 2024-09-05 14:01:52
  * @FilePath: \SkyDo\ui\src\views\Todo.vue
 -->
 <template>
@@ -68,7 +68,7 @@ export default {
     // 定时检查eta时间
     checkEta() {
       const now = new Date().getTime();
-      console.log(this.todoList)
+      // console.log(this.todoList)
       if (this.todoList) {
         this.todoList.forEach(todo => {
           // 已经设置了eta字段，并且eta字段时间格式正确，并且该待办事项没有过期

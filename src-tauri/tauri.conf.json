@@ -8,13 +8,17 @@
   },
   "package": {
     "productName": "SkyDo",
-    "version": "0.7.1"
+    "version": "0.7.0"
   },
   "tauri": {
     "updater": {
       "active": true,
       "endpoints": [
-        "https://github.com/sky984-11/SkyDo/releases/download/untagged-39fd880fcc8d61de1e67/latest.json"
+        "https://kkgithub.com/sky984-11/SkyDo/releases/download/v0.7.1/latest.json",
+        "https://githubfast.com/sky984-11/SkyDo/releases/download/v0.7.1/latest.json",
+        "https://github.hscsec.cn/sky984-11/SkyDo/releases/download/v0.7.1/latest.json",
+        "https://521github.com/sky984-11/SkyDo/releases/download/v0.7.1/latest.json",
+        "https://github.com/sky984-11/SkyDo/releases/download/v0.7.1/latest.json"
       ],
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDZDRkUyOTg0MUVCMUI3MTUKUldRVnQ3RWVoQ24rYkR3THQyV0dJK1pjdUVDazcwSG05OTlrankrSmVjRityaU1IM3JTN3l3QkcK"

@@ -30,11 +30,11 @@ import { isDev } from '@/utils/env.js';
 import DB from "@/utils/db";
 import { BaseDirectory, exists, readBinaryFile } from '@tauri-apps/api/fs';
 import { getVersion, getName } from '@tauri-apps/api/app';
-// import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
+import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
 
 export default {
 
-  
+
   data() {
     return {
       appName: '',
@@ -55,7 +55,7 @@ export default {
     }
   },
   methods: {
-    
+
     settingsRouter() {
       if (this.$route.path !== '/settings') {
         this.$router.push({ name: 'Settings' }).catch(err => {
@@ -84,14 +84,19 @@ export default {
 
     async initList() {
       try {
-        // const update = await checkUpdate();
-        // console.log(update)
         const appName = await getName();
         const appVersion = await getVersion();
         this.appName = appName + ' v' + appVersion;
 
         await DB.initDB();
         this.getSettingsList();
+
+        const update = await checkUpdate();
+        console.log(update)
+        if (update.shouldUpdate) {
+          console.log(`Installing update ${update.manifest?.version}, ${update.manifest?.date}, ${update.manifest.body}`);
+          // await installUpdate();
+        }
       } catch (error) {
         console.error(error);
       }
