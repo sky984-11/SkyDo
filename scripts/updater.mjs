@@ -2,7 +2,7 @@
  * @Description: 获取草稿版的latest.json并更新到updater release
  * @Author: sky
  * @Date: 2024-08-26 17:55:05
- * @LastEditTime: 2024-09-07 07:01:08
+ * @LastEditTime: 2024-09-07 07:11:01
  * @LastEditors: sky
  */
 // 注意要安装@actions/github依赖
@@ -65,7 +65,7 @@ const updateRelease = async () => {
     });
 
     // 将 JSON 数据解析为对象
-    const updateData = JSON.parse(latestJsonResponse.data);
+    const updateData = latestJsonResponse.data;
 
     // 更新 version 信息（如果需要）
     // updateData.version = latestDraft.tag_name.replace(/^v/, '');
