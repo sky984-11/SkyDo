@@ -2,7 +2,7 @@
  * @Description: 获取草稿版的latest.json并更新到updater release
  * @Author: sky
  * @Date: 2024-08-26 17:55:05
- * @LastEditTime: 2024-09-06 22:49:51
+ * @LastEditTime: 2024-09-07 07:01:08
  * @LastEditors: sky
  */
 // 注意要安装@actions/github依赖
@@ -21,7 +21,7 @@ const getLatestDraftRelease = async () => {
 
   // 筛选出草稿状态的 release，并按创建时间降序排序以找到最新的草稿 release
   const draftReleases = releases
-    .filter((release) => release.draft)
+    // .filter((release) => release.draft)
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   // 返回最新的草稿 release
