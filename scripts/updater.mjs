@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: sky
  * @Date: 2024-08-26 17:55:05
- * @LastEditTime: 2024-09-06 13:35:18
+ * @LastEditTime: 2024-09-06 13:49:51
  * @LastEditors: sky
  */
 // 注意要安装@actions/github依赖
@@ -43,3 +43,4 @@ const updateRelease = async () => {
     data: file,
   });
 };
+updateRelease();
