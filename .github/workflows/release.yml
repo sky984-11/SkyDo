@@ -58,37 +58,37 @@ jobs:
                   releaseBody: 'See the assets to download and install this version.'
                   releaseDraft: true
                   prerelease: false
-    # 生成静态资源并将其推送到 github pages
-    updater:
-      runs-on: ubuntu-latest
-      needs: [release]
+    # # 生成静态资源并将其推送到 github pages
+    # updater:
+    #   runs-on: ubuntu-latest
+    #   needs: [release]
 
-      steps:
-      # 检出代码
-      - uses: actions/checkout@v4
+    #   steps:
+    #   # 检出代码
+    #   - uses: actions/checkout@v4
 
-      # 安装依赖
-      - name: Install dependencies
-        run: yarn
+    #   # 安装依赖
+    #   - name: Install dependencies
+    #     run: yarn
 
-      # 安装node-fetch
-      - name: Install node-fetch
-        run: yarn add node-fetch
+    #   # 安装node-fetch
+    #   - name: Install node-fetch
+    #     run: yarn add node-fetch
 
-      # 安装@actions/github
-      - name: Install @actions/github
-        run: yarn add @actions/github
+    #   # 安装@actions/github
+    #   - name: Install @actions/github
+    #     run: yarn add @actions/github
 
-      # 运行 updater 脚本
-      - name: Run updater script
-        run: yarn updater
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   # 运行 updater 脚本
+    #   - name: Run updater script
+    #     run: yarn updater
+    #     env:
+    #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 部署 install.json
-      - name: Deploy install.json
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./updater
-          force_orphan: true
+    #   # 部署 install.json
+    #   - name: Deploy install.json
+    #     uses: peaceiris/actions-gh-pages@v4
+    #     with:
+    #       github_token: ${{ secrets.GITHUB_TOKEN }}
+    #       publish_dir: ./updater
+    #       force_orphan: true
