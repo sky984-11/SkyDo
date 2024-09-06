@@ -1,6 +1,6 @@
 # Updater Log
 
-## v0.7.11
+## v0.7.12
 - [x] 增加更新json写入updater标签
 
 ## v0.7.2
