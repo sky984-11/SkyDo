@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: sky
  * @Date: 2024-08-26 17:55:05
- * @LastEditTime: 2024-09-06 14:29:00
+ * @LastEditTime: 2024-09-06 17:36:40
  * @LastEditors: sky
  */
 // 注意要安装@actions/github依赖
@@ -13,6 +13,11 @@ import fs from 'fs';
 // 在容器中可以通过env环境变量来获取参数
 const octokit = getOctokit(process.env.GITHUB_TOKEN);
 
+
+
+
+
+
 const updateRelease = async () => {
   // 获取updater tag的release
   const { data: release } = await octokit.rest.repos.getReleaseByTag({
@@ -21,9 +26,11 @@ const updateRelease = async () => {
     tag: "updater",
   });
 
+  const { data: Latest } = await octokit.rest.repos.getLatestRelease({ owner: context.repo.owner, repo: context.repo.repo });
+
   // 需要生成的静态 json 文件数据，根据自己的需要进行调整
   const updateData = {
-    version: "updater",
+    version: Latest.tag_name,
     // 使用 UPDATE_LOG.md，如果不需要版本更新日志，则将此字段置空
     notes: "",
     pub_date: new Date().toISOString(),
@@ -70,7 +77,7 @@ const updateRelease = async () => {
     });
   };
 
-  const promises = release.assets.map(async (asset) => {
+  const promises = Latest.assets.map(async (asset) => {
     // windows
     await setAsset(asset, /.msi.zip/, ['win64', 'windows-x86_64']);
 
