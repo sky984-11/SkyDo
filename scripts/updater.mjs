@@ -2,7 +2,7 @@
  * @Description: 获取草稿版的latest.json并更新到updater release
  * @Author: sky
  * @Date: 2024-08-26 17:55:05
- * @LastEditTime: 2024-09-08 06:43:24
+ * @LastEditTime: 2024-09-08 06:51:58
  * @LastEditors: sky
  */
 import { context, getOctokit } from "@actions/github";
@@ -99,8 +99,12 @@ const updateRelease = async () => {
     // 将更新的数据写入本地文件
     const updateData = latestJsonResponse.data;
     console.log("updateData", updateData);
+    const decoder = new TextDecoder('utf-8');
+    const jsonString = decoder.decode(updateData);
+    const jsonObject = JSON.parse(jsonString);
+    console.log("jsonObject", jsonObject);
     const filePath = "latest.json";
-    fs.writeFileSync(filePath, JSON.stringify(updateData, null, 2));
+    fs.writeFileSync(filePath, JSON.stringify(jsonObject, null, 2));
 
     // 删除旧的 latest.json 文件并上传新的文件
     await deleteOldAssets(release);
