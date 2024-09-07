@@ -2,7 +2,7 @@
  * @Description: 获取草稿版的latest.json并更新到updater release
  * @Author: sky
  * @Date: 2024-08-26 17:55:05
- * @LastEditTime: 2024-09-07 07:38:11
+ * @LastEditTime: 2024-09-07 13:45:51
  * @LastEditors: sky
  */
 import { context, getOctokit } from "@actions/github";
@@ -19,9 +19,9 @@ const getLatestDraftRelease = async () => {
       repo: context.repo.repo,
     });
 
-    // 按创建时间降序排序并返回最新的草稿 release
+
     return releases
-      // .filter((release) => release.draft)
+      .filter((release) => release.draft)
       .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0] || null;
   } catch (error) {
     console.error("Error fetching draft releases:", error);
