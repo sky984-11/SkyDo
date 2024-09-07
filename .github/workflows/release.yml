@@ -12,7 +12,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                platform: [macos-latest]  #  ubuntu-20.04, windows-latest
+                platform: [macos-latest，ubuntu-20.04, windows-latest]
         runs-on: ${{ matrix.platform }}
 
         steps:
@@ -85,11 +85,3 @@ jobs:
         run: yarn updater
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # 部署 install.json
-      # - name: Deploy install.json
-      #   uses: peaceiris/actions-gh-pages@v4
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: ./updater
-      #     force_orphan: true
