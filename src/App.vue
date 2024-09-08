@@ -95,7 +95,7 @@ export default {
         console.log(update)
         if (update.shouldUpdate) {
           console.log(`Installing update ${update.manifest?.version}, ${update.manifest?.date}, ${update.manifest.body}`);
-          // await installUpdate();
+          await installUpdate();
         }
       } catch (error) {
         console.error(error);
@@ -116,7 +116,7 @@ export default {
   created() {
     // 正式版本禁用右键
     if (!isDev()) {
-      window.addEventListener("contextmenu", (e) => e.preventDefault(), false);
+    //  window.addEventListener("contextmenu", (e) => e.preventDefault(), false);
     }
 
 
