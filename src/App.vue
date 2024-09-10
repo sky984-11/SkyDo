@@ -30,7 +30,8 @@ import { isDev } from '@/utils/env.js';
 import DB from "@/utils/db";
 import { BaseDirectory, exists, readBinaryFile } from '@tauri-apps/api/fs';
 import { getVersion, getName } from '@tauri-apps/api/app';
-import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
+import { fetch } from '@tauri-apps/api/http';
+import { message} from '@tauri-apps/api/dialog';
 
 export default {
 
@@ -91,11 +92,34 @@ export default {
         await DB.initDB();
         this.getSettingsList();
 
-        const update = await checkUpdate();
-        console.log(update)
-        if (update.shouldUpdate) {
-          console.log(`Installing update ${update.manifest?.version}, ${update.manifest?.date}, ${update.manifest.body}`);
-          await installUpdate();
+        let response = await fetch('https://mirror.ghproxy.com/https://github.com/sky984-11/SkyDo/releases/download/updater/latest.json', {
+          method: 'GET',
+          timeout: 30,
+        });
+
+        if (!response.ok) {
+          // 如果请求失败，尝试直接从GitHub获取数据
+          const backupResponse = await fetch('https://github.com/sky984-11/SkyDo/releases/download/updater/latest.json', {
+            method: 'GET',
+            timeout: 30,
+          });
+          if (!backupResponse.ok) throw new Error('无法获取更新信息');
+          response = backupResponse;
+        }
+
+        const updateData = response.data
+
+        if (appVersion != updateData.version) {
+          const updateStr = `
+              新版本：${updateData.version}
+              更新时间：${updateData.pub_date}
+              Windows下载链接：${updateData.platforms['windows-x86_64']['url']}
+              Linux下载链接：${updateData.platforms['linux-x86_64']['url']}
+              其他平台请查看地址：https://github.com/sky984-11/SkyDo/releases 进行下载
+              更新内容：${updateData.notes}
+              `;
+          await message(updateStr, { title: appName + '版本更新通知'});
+
         }
       } catch (error) {
         console.error(error);
@@ -116,9 +140,8 @@ export default {
   created() {
     // 正式版本禁用右键
     if (!isDev()) {
-    //  window.addEventListener("contextmenu", (e) => e.preventDefault(), false);
+      window.addEventListener("contextmenu", (e) => e.preventDefault(), false);
     }
-
 
     this.initList()
   },

@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: sky
+ * @Date: 2024-08-14 15:34:12
+ * @LastEditTime: 2024-09-10 09:13:21
+ * @LastEditors: sky
+ */
 /**
  * @Author: liupeng
  * @Description: 
@@ -14,7 +21,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import "./style/index.css";
 import "./assets/iconfont/iconfont.css";
 
-
+// ,MessageBox,Message
 import { Icon,Row,Col,Input,Tabs,TabPane,Tooltip ,Form,FormItem,Switch,Upload,Image} from 'element-ui';
 
 
@@ -28,10 +35,10 @@ Vue.use(Tooltip);
 Vue.use(Form);
 Vue.use(FormItem);
 Vue.use(Switch);
-
 Vue.use(Image);
 Vue.use(Upload);
-
+// Vue.prototype.$alert = MessageBox.alert;
+// Vue.prototype.$message = Message;
 
 
 
