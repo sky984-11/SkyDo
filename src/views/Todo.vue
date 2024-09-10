@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-25 09:18:01
- * @LastEditTime: 2024-09-05 14:01:52
+ * @LastEditTime: 2024-09-10 14:44:22
  * @FilePath: \SkyDo\ui\src\views\Todo.vue
 -->
 <template>
@@ -285,6 +285,11 @@ export default {
 </script>
 
 <style scoped>
+
+* {
+  color: #ffffff;
+}
+
 .root {
   width: 100%;
   min-height: 100%;

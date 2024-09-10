@@ -31,7 +31,7 @@ import DB from "@/utils/db";
 import { BaseDirectory, exists, readBinaryFile } from '@tauri-apps/api/fs';
 import { getVersion, getName } from '@tauri-apps/api/app';
 import { fetch } from '@tauri-apps/api/http';
-import { message} from '@tauri-apps/api/dialog';
+import { message } from '@tauri-apps/api/dialog';
 
 export default {
 
@@ -111,14 +111,28 @@ export default {
 
         if (appVersion != updateData.version) {
           const updateStr = `
-              新版本：${updateData.version}
-              更新时间：${updateData.pub_date}
-              Windows下载链接：${updateData.platforms['windows-x86_64']['url']}
-              Linux下载链接：${updateData.platforms['linux-x86_64']['url']}
-              其他平台请查看地址：https://github.com/sky984-11/SkyDo/releases 进行下载
-              更新内容：${updateData.notes}
-              `;
-          await message(updateStr, { title: appName + '版本更新通知'});
+<div>
+  <p>
+    <strong>新版本：</strong>${updateData.version}<br>
+    <strong>更新时间：</strong>${updateData.pub_date}<br>
+    <strong>Windows下载链接：</strong><a href="${updateData.platforms['windows-x86_64']['url']}" target="_blank">${updateData.platforms['windows-x86_64']['url']}</a><br>
+    <strong>Linux下载链接：</strong><a href="${updateData.platforms['linux-x86_64']['url']}" target="_blank">${updateData.platforms['linux-x86_64']['url']}</a><br>
+    <strong>More：</strong><a href="https://github.com/sky984-11/SkyDo/releases" target="_blank">https://github.com/sky984-11/SkyDo/releases</a><br>
+  </p>
+  <p><strong>更新内容：</strong><br>${updateData.notes}</p>
+</div>
+      `;
+
+
+          // await message(updateStr, { title: appName + '版本更新通知'});
+
+          this.$notify({
+            title: appName + '版本更新通知',
+            message: updateStr,
+            duration: 0,
+            type: 'warning',
+            dangerouslyUseHTMLString: true
+          });
 
         }
       } catch (error) {
@@ -156,6 +170,7 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 5px;
+  color: #ffffff;
 }
 
 #app .mask {
