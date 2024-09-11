@@ -19,17 +19,18 @@ import { type } from '@tauri-apps/api/os';
 
 
 let db;
-let AppData 
-const osType = await type();
+let AppData
 
-if (osType === 'Windows_NT') {
-  AppData = BaseDirectory.Resource;
-} else {
-  AppData = BaseDirectory.AppData;
-}
 
 const DB = {
   async initDB() {
+    const osType = await type();
+
+    if (osType === 'Windows_NT') {
+      AppData = BaseDirectory.Resource;
+    } else {
+      AppData = BaseDirectory.AppData;
+    }
     // 检查db文件是否存在,不存在则创建
     const isDBExit = await exists('db.json', { dir: AppData });
     if (!isDBExit) {
@@ -81,7 +82,7 @@ const DB = {
             id: "272aa857-bd53-44fb-b6fc-49d4ef595ade",
           },
         ],
-        settings: { autoStart: true, wechatNotificationEnabled: false, alwaysOnTop: false,osType:osType,dataDir:AppData },
+        settings: { autoStart: true, wechatNotificationEnabled: false, alwaysOnTop: false, osType: osType, dataDir: AppData },
       }), { dir: AppData });
     }
 
