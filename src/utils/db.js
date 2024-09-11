@@ -43,7 +43,8 @@ const DB = {
   async initDB() {
     try {
       const osType = await getOSType();
-      AppData = osType === 'Windows_NT' ? BaseDirectory.Resource : BaseDirectory.AppData;
+      // AppData = osType === 'Windows_NT' ? BaseDirectory.Resource : BaseDirectory.AppData;
+      AppData = BaseDirectory.AppData
 
       const isDBExist = await exists('db.json', { dir: AppData });
       console.debug('检查db文件是否存在:', isDBExist);

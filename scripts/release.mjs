@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: sky
  * @Date: 2024-09-04 09:27:26
- * @LastEditTime: 2024-09-04 14:00:59
+ * @LastEditTime: 2024-09-11 12:54:16
  * @LastEditors: sky
  */
 // scripts/release.mjs
@@ -48,6 +48,8 @@ async function release() {
     fs.writeFileSync(tauriConfPath, JSON.stringify(tauriConf, null, 2));
     // 将新版本写入 package.json 文件
     fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2));
+
+    // 后续增加openssl检查是否注释
 
     // 提交修改的文件，打 tag 标签（tag 标签是为了触发 github action 工作流）并推送到远程
     execSync('git add ./package.json ./UPDATE_LOG.md src-tauri/tauri.conf.json');
