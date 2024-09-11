@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "SkyDo",
-    "version": "0.7.37"
+    "version": "0.7.38"
   },
   "tauri": {
     "updater": {
@@ -23,8 +23,6 @@
       "all": false,
       "window": {
         "all": true
-
-
       },
       "process": {
         "relaunch": true
