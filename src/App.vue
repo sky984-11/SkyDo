@@ -28,7 +28,7 @@
 <script>
 import { isDev } from '@/utils/env.js';
 import DB from "@/utils/db";
-import { BaseDirectory, exists, readBinaryFile } from '@tauri-apps/api/fs';
+import {  exists, readBinaryFile } from '@tauri-apps/api/fs';
 import { getVersion, getName } from '@tauri-apps/api/app';
 import { fetch } from '@tauri-apps/api/http';
 import { appWindow } from '@tauri-apps/api/window';
@@ -75,7 +75,7 @@ export default {
 
 
     async handleSetBackgroundImage(dir, filename) {
-      const readImages = await readBinaryFile(dir + '/' + filename, { dir: BaseDirectory.AppData });
+      const readImages = await readBinaryFile(dir + '/' + filename, { dir: this.settings['dataDir']});
       let blob = new Blob([readImages]);
       this.backgroundImage = URL.createObjectURL(blob);
       this.settings['imageName'] = filename;
@@ -92,9 +92,7 @@ export default {
         await DB.initDB();
         await this.getSettingsList();
 
-        console.log(this.settings)
         if (this.settings['alwaysOnTop']) {
-          console.log(appWindow)
           appWindow.setAlwaysOnTop(this.settings['alwaysOnTop']);
         }
 
@@ -148,12 +146,16 @@ export default {
     async getSettingsList() {
       const list = DB.get("settings");
       this.settings = list
-      let isImagesExit = await exists('images/' + list.imageName, { dir: BaseDirectory.AppData });
+
+      if(list.imageName){
+        let isImagesExit = await exists('images/' + list.imageName, { dir: list['dataDir'] });
       if (isImagesExit) {
-        const readImages = await readBinaryFile('images/' + list.imageName, { dir: BaseDirectory.AppData });
+        const readImages = await readBinaryFile('images/' + list.imageName, { dir: list['dataDir']});
         let blob = new Blob([readImages]);
         this.backgroundImage = URL.createObjectURL(blob);
       }
+      }
+
     },
   },
   created() {

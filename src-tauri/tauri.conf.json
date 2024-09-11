@@ -35,10 +35,15 @@
         "all": true,
         "scope": [
           "$APPDATA/*",
-          "$APPDATA/images/*"
+          "$APPDATA/images/*",
+          "$RESOURCE/*",
+          "$RESOURCE/images/*"
         ]
       },
       "notification": {
+        "all": true
+      },
+      "os": {
         "all": true
       },
       "http": {

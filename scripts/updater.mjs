@@ -2,7 +2,7 @@
  * @Description: 获取草稿版的latest.json并更新到updater release
  * @Author: sky
  * @Date: 2024-08-26 17:55:05
- * @LastEditTime: 2024-09-09 09:06:42
+ * @LastEditTime: 2024-09-11 10:03:25
  * @LastEditors: sky
  */
 import { context, getOctokit } from "@actions/github";
@@ -102,8 +102,8 @@ const updateRelease = async () => {
     const jsonString = decoder.decode(updateData);
     let jsonObject = JSON.parse(jsonString);
 
-    jsonObject.platforms['linux-x86_64']['url'] = jsonObject.platforms['linux-x86_64']['url'].replace(/\.tar\.gz$/, '')
-    jsonObject.platforms['windows-x86_64']['url'] = jsonObject.platforms['windows-x86_64']['url'].replace(/\.zip$/, '')
+    // jsonObject.platforms['linux-x86_64']['url'] = jsonObject.platforms['linux-x86_64']['url'].replace(/\.tar\.gz$/, '')
+    // jsonObject.platforms['windows-x86_64']['url'] = jsonObject.platforms['windows-x86_64']['url'].replace(/\.zip$/, '')
     const filePath = "latest.json";
     console.log("jsonObject", jsonObject);
     fs.writeFileSync(filePath, JSON.stringify(jsonObject, null, 2));

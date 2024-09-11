@@ -15,9 +15,18 @@ import { BaseDirectory, exists, writeTextFile, readTextFile, writeBinaryFile } f
 
 import { getNowDate, getNowDateTime } from '@/utils/common';
 import { save, message } from '@tauri-apps/api/dialog';
+import { type } from '@tauri-apps/api/os';
+
 
 let db;
-const AppData = BaseDirectory.AppData;
+let AppData 
+const osType = await type();
+
+if (osType === 'Windows_NT') {
+  AppData = BaseDirectory.Resource;
+} else {
+  AppData = BaseDirectory.AppData;
+}
 
 const DB = {
   async initDB() {
@@ -72,7 +81,7 @@ const DB = {
             id: "272aa857-bd53-44fb-b6fc-49d4ef595ade",
           },
         ],
-        settings: { autoStart: true, wechatNotificationEnabled: false, alwaysOnTop: false },
+        settings: { autoStart: true, wechatNotificationEnabled: false, alwaysOnTop: false,osType:osType,dataDir:AppData },
       }), { dir: AppData });
     }
 

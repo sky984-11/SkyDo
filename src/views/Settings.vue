@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-30 15:53:35
- * @LastEditTime: 2024-09-11 08:53:15
+ * @LastEditTime: 2024-09-11 10:15:37
  * @FilePath: \SkyDo\ui\src\views\Settings.vue
 -->
 <template>
@@ -55,12 +55,11 @@ import { enable, disable } from "tauri-plugin-autostart-api";
 import { appWindow } from '@tauri-apps/api/window';
 import debounce from 'lodash/debounce';
 
-import { createDir, BaseDirectory, exists, readBinaryFile, writeBinaryFile } from '@tauri-apps/api/fs';
+import { createDir, exists, writeBinaryFile } from '@tauri-apps/api/fs';
 
 export default {
   data() {
     return {
-      // settings: {},
       rules: {
         wechatNotificationId: [
           { required: true, message: '请先关注以下公众号获取用户ID', trigger: 'blur' }
@@ -109,11 +108,11 @@ export default {
 
       this.blobToUint8Array(data.file).then(async (uint8Array) => {
         // 上传时默认创建images目录
-        await createDir('images', { dir: BaseDirectory.AppData, recursive: true });
+        await createDir('images', { dir: this.settings['dataDir'], recursive: true });
         // 写入图片到images目录下
-        await writeBinaryFile('images/' + data.file.name, uint8Array, { dir: BaseDirectory.AppData });
+        await writeBinaryFile('images/' + data.file.name, uint8Array, { dir: this.settings['dataDir']});
         //判断文件是否成功写入
-        let isImagesExit = await exists('images/' + data.file.name, { dir: BaseDirectory.AppData });
+        let isImagesExit = await exists('images/' + data.file.name, { dir:this.settings['dataDir']});
         if (isImagesExit) {
           // 设置背景图片的方法交给父组件实现
           this.$emit('setBackgroupImage', 'images', data.file.name,)
