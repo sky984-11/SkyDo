@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-25 09:18:01
- * @LastEditTime: 2024-09-10 14:44:22
+ * @LastEditTime: 2024-09-11 12:50:12
  * @FilePath: \SkyDo\ui\src\views\Todo.vue
 -->
 <template>
@@ -88,6 +88,7 @@ export default {
     },
     async initTodoList() {
       try {
+        await DB.initDB();
         this.getTodoList();
       } catch (error) {
         console.error(error);
@@ -101,6 +102,7 @@ export default {
 
     getTodoList() {
       const list = DB.get("todoList");
+      console.log('getTodoList',list)
       this.todoList = list;
     },
     add() {
@@ -270,7 +272,7 @@ export default {
   beforeDestroy() {
     clearInterval(this.intervalId);
   },
-  created() {
+  mounted() {
     this.initTodoList();
     this.initSpeak()
   },

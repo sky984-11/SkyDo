@@ -10,7 +10,7 @@
         <router-link :settings="settings" draggable="false" to="/">Todo</router-link> |
         <router-link draggable="false" to="/done">Done</router-link>
       </div>
-      <!-- 设置功能，后面添加tabs->应用设置->开机自启，通过路由实现，跳转后需要一个开关返回上级 -->
+
       <div class="tools" data-tauri-drag-region>
         <i class="el-icon-document" @click="exportExecl()"></i>
         <i class="el-icon-setting" @click="settingsRouter"></i>
@@ -34,8 +34,6 @@ import { fetch } from '@tauri-apps/api/http';
 import { appWindow } from '@tauri-apps/api/window';
 
 export default {
-
-
   data() {
     return {
       appName: '',
@@ -70,7 +68,7 @@ export default {
     },
 
     exportExecl() {
-      DB.exportExecl();
+      DB.exportExcel();
     },
 
 
@@ -161,7 +159,7 @@ export default {
   created() {
     // 正式版本禁用右键
     if (!isDev()) {
-      window.addEventListener("contextmenu", (e) => e.preventDefault(), false);
+      // window.addEventListener("contextmenu", (e) => e.preventDefault(), false);
     }
     this.initList()
 

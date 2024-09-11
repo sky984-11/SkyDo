@@ -35,7 +35,7 @@ export default {
     },
     getDateStr,
     async getDoneList() {
-      const list = await DB.groupby("doneList", "done_date");
+      const list = await DB.groupBy("doneList", "done_date");
       console.log("doneGroupList", list)
       this.doneGroupList = list;
     },
