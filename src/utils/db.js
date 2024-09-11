@@ -7,7 +7,7 @@
  */
 import { uniqueId, reverse, sortBy, groupBy } from 'lodash';
 import * as XLSX from 'xlsx';
-import { BaseDirectory, exists, writeTextFile, readTextFile, writeBinaryFile } from '@tauri-apps/api/fs';
+import { BaseDirectory, exists, writeTextFile, readTextFile, writeBinaryFile, createDir } from '@tauri-apps/api/fs';
 import { getNowDate, getNowDateTime } from '@/utils/common';
 import { save, message } from '@tauri-apps/api/dialog';
 import { type as getOSType } from '@tauri-apps/api/os';
@@ -44,6 +44,9 @@ const DB = {
     try {
       const osType = await getOSType();
       // AppData = osType === 'Windows_NT' ? BaseDirectory.Resource : BaseDirectory.AppData;
+      if (osType === 'Windows_NT') {
+        await createDir('com.SkyDo.top', { dir: BaseDirectory.AppData, recursive: true })
+      }
       AppData = BaseDirectory.AppData
 
       const isDBExist = await exists('db.json', { dir: AppData });
