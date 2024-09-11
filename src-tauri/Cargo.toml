@@ -25,7 +25,7 @@ tauri-plugin-autostart = { git = "https://github.com/tauri-apps/plugins-workspac
 # 单实例插件
 tauri-plugin-single-instance = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 # 开发环境下需要注释openssl，正式环境需要开启
-# openssl-sys = {version = "0.9", features = ["vendored"] }
+openssl-sys = {version = "0.9", features = ["vendored"] }
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
 # If you use cargo directly instead of tauri's cli you can use this feature flag to switch between tauri's `dev` and `build` modes.
