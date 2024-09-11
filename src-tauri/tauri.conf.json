@@ -23,16 +23,14 @@
       "all": false,
       "window": {
         "all": true
+
+
       },
       "process": {
         "relaunch": true
       },
       "dialog": {
-        "all": true,
-        "ask": true,
-        "confirm": true,
         "message": true,
-        "open": true,
         "save": true
       },
       "fs": {
@@ -44,28 +42,6 @@
       },
       "notification": {
         "all": true
-      },
-      "shell": {
-        "all": true,
-        "scope": [
-          {
-            "name": "check-tailscale-isExit",
-            "cmd": "tailscale",
-            "args": [
-              "version"
-            ]
-          },
-          {
-            "name": "check-tailscale-ping",
-            "cmd": "tailscale",
-            "args": [
-              "ping",
-              {
-                "validator": ".*?"
-              }
-            ]
-          }
-        ]
       },
       "http": {
         "all": true,

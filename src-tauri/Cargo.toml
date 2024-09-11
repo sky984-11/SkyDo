@@ -18,14 +18,14 @@ tauri-build = { version = "1.5.0", features = [] }
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 # 正式版本需要去掉"devtools"
-tauri = { version = "1.5.3", features = [ "http-all", "updater", "dialog-all", "process-relaunch", "notification-all", "shell-all", "fs-all", "window-all", "system-tray", "devtools"] }
+tauri = { version = "1.5.3", features = [ "window-all", "dialog-message", "dialog-save", "http-all", "updater", "process-relaunch", "notification-all", "fs-all", "system-tray", "devtools"] }
 # tauri-plugin-positioner = {version = "1.0", features = ["system-tray"] }
 # 开机自启插件
 tauri-plugin-autostart = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 # 单实例插件
 tauri-plugin-single-instance = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 # 开发环境下需要注释openssl，正式环境需要开启
-# openssl-sys = {version = "0.9", features = ["vendored"] }
+openssl-sys = {version = "0.9", features = ["vendored"] }
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
 # If you use cargo directly instead of tauri's cli you can use this feature flag to switch between tauri's `dev` and `build` modes.

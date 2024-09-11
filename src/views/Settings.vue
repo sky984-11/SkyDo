@@ -2,7 +2,7 @@
  * @Author: liupeng
  * @Description: 
  * @Date: 2024-01-30 15:53:35
- * @LastEditTime: 2024-08-30 13:11:07
+ * @LastEditTime: 2024-09-11 08:53:15
  * @FilePath: \SkyDo\ui\src\views\Settings.vue
 -->
 <template>
@@ -55,7 +55,7 @@ import { enable, disable } from "tauri-plugin-autostart-api";
 import { appWindow } from '@tauri-apps/api/window';
 import debounce from 'lodash/debounce';
 
-import { createDir,BaseDirectory, exists, readBinaryFile, writeBinaryFile } from '@tauri-apps/api/fs';
+import { createDir, BaseDirectory, exists, readBinaryFile, writeBinaryFile } from '@tauri-apps/api/fs';
 
 export default {
   data() {
@@ -68,17 +68,18 @@ export default {
       }
     };
   },
-  props:{
+  props: {
     imageUrl: {
       type: String,
-      default:""
+      default: ""
     },
-    settings:{
+    settings: {
       type: Object,
-      default:{}
+      default: {}
     }
   },
   created() {
+
 
   },
   methods: {
@@ -115,7 +116,7 @@ export default {
         let isImagesExit = await exists('images/' + data.file.name, { dir: BaseDirectory.AppData });
         if (isImagesExit) {
           // 设置背景图片的方法交给父组件实现
-          this.$emit('setBackgroupImage','images',data.file.name,)
+          this.$emit('setBackgroupImage', 'images', data.file.name,)
         }
       })
     },

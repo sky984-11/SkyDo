@@ -31,7 +31,7 @@ import DB from "@/utils/db";
 import { BaseDirectory, exists, readBinaryFile } from '@tauri-apps/api/fs';
 import { getVersion, getName } from '@tauri-apps/api/app';
 import { fetch } from '@tauri-apps/api/http';
-import { message } from '@tauri-apps/api/dialog';
+import { appWindow } from '@tauri-apps/api/window';
 
 export default {
 
@@ -90,7 +90,13 @@ export default {
         this.appName = appName + ' v' + appVersion;
 
         await DB.initDB();
-        this.getSettingsList();
+        await this.getSettingsList();
+
+        console.log(this.settings)
+        if (this.settings['alwaysOnTop']) {
+          console.log(appWindow)
+          appWindow.setAlwaysOnTop(this.settings['alwaysOnTop']);
+        }
 
         let response = await fetch('https://mirror.ghproxy.com/https://github.com/sky984-11/SkyDo/releases/download/updater/latest.json', {
           method: 'GET',
@@ -111,20 +117,17 @@ export default {
 
         if (appVersion != updateData.version) {
           const updateStr = `
-<div>
-  <p>
-    <strong>新版本：</strong>${updateData.version}<br>
-    <strong>更新时间：</strong>${updateData.pub_date}<br>
-    <strong>Windows下载链接：</strong><a href="${updateData.platforms['windows-x86_64']['url']}" target="_blank">${updateData.platforms['windows-x86_64']['url']}</a><br>
-    <strong>Linux下载链接：</strong><a href="${updateData.platforms['linux-x86_64']['url']}" target="_blank">${updateData.platforms['linux-x86_64']['url']}</a><br>
-    <strong>More：</strong><a href="https://github.com/sky984-11/SkyDo/releases" target="_blank">https://github.com/sky984-11/SkyDo/releases</a><br>
-  </p>
-  <p><strong>更新内容：</strong><br>${updateData.notes}</p>
-</div>
+                <div>
+                  <p>
+                    <strong>新版本：</strong>${updateData.version}<br>
+                    <strong>更新时间：</strong>${updateData.pub_date}<br>
+                    <strong>Windows下载链接：</strong><a href="${updateData.platforms['windows-x86_64']['url']}" target="_blank">${updateData.platforms['windows-x86_64']['url']}</a><br>
+                    <strong>Linux下载链接：</strong><a href="${updateData.platforms['linux-x86_64']['url']}" target="_blank">${updateData.platforms['linux-x86_64']['url']}</a><br>
+                    <strong>More：</strong><a href="https://github.com/sky984-11/SkyDo/releases" target="_blank">https://github.com/sky984-11/SkyDo/releases</a><br>
+                  </p>
+                  <p><strong>更新内容：</strong><br>${updateData.notes}</p>
+                </div>
       `;
-
-
-          // await message(updateStr, { title: appName + '版本更新通知'});
 
           this.$notify({
             title: appName + '版本更新通知',
@@ -138,6 +141,8 @@ export default {
       } catch (error) {
         console.error(error);
       }
+
+
     },
 
     async getSettingsList() {
@@ -156,8 +161,8 @@ export default {
     if (!isDev()) {
       window.addEventListener("contextmenu", (e) => e.preventDefault(), false);
     }
-
     this.initList()
+
   },
 };
 </script>
