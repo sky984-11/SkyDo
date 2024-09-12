@@ -1,13 +1,13 @@
 <template>
-  <div id="app" :class="{ unfocused: ignoreMouse }" :style="backgroundStyle">
+  <div id="app" :class="{ unfocused: ignoreMouse }" :style="backgroundStyle" >
     <div class="mask"></div>
     <div class="drag-nav" data-tauri-drag-region>
       <b>{{ appName }}</b>
       <i>Powered by sky丿L鹏</i>
     </div>
     <div class="nav" data-tauri-drag-region>
-      <div class="link" data-tauri-drag-region>
-        <router-link :settings="settings" draggable="false" to="/">Todo</router-link> |
+      <div class="link" data-tauri-drag-region @contextmenu.prevent="onRightClick($event, settings.defaultGroup)">
+        <router-link :settings="settings" draggable="false" to="/" >{{ settings.defaultGroup ? settings.defaultGroup : 'Todo'}}</router-link> |
         <router-link draggable="false" to="/done">Done</router-link>
       </div>
 
@@ -18,22 +18,27 @@
     </div>
     <div class="main scrollbar scrollbar-y">
       <transition name="fade-transform" mode="out-in">
-        <router-view :settings="settings" :imageUrl="backgroundImage" @setBackgroupImage="handleSetBackgroundImage" />
+        <router-view :settings="settings" :groups="groups" :imageUrl="backgroundImage" @setBackgroupImage="handleSetBackgroundImage" />
       </transition>
     </div>
-
+    <ContextMenu ref="contextMenu"/>
   </div>
 </template>
 
 <script>
 import { isDev } from '@/utils/env.js';
 import DB from "@/utils/db";
-import {  exists, readBinaryFile } from '@tauri-apps/api/fs';
+import { exists, readBinaryFile } from '@tauri-apps/api/fs';
 import { getVersion, getName } from '@tauri-apps/api/app';
 import { fetch } from '@tauri-apps/api/http';
 import { appWindow } from '@tauri-apps/api/window';
 
+import ContextMenu from '@/components/ContextMenu.vue';
+
 export default {
+  components: {
+    ContextMenu,
+  },
   data() {
     return {
       appName: '',
@@ -41,6 +46,7 @@ export default {
       // 背景图片
       backgroundImage: null,
       settings: {},
+      groups:[]
     };
   },
   computed: {
@@ -54,7 +60,17 @@ export default {
     }
   },
   methods: {
+    onRightClick(event,item) {
+      const options = [
+        { label: '切换分组', action: this.changeGroup},
+      ];
+      this.$refs.contextMenu.showMenu(event, options,item);
+    },
 
+
+    changeGroup(item){
+      console.log(item)
+    },
     settingsRouter() {
       if (this.$route.path !== '/settings') {
         this.$router.push({ name: 'Settings' }).catch(err => {
@@ -73,7 +89,7 @@ export default {
 
 
     async handleSetBackgroundImage(dir, filename) {
-      const readImages = await readBinaryFile(dir + '/' + filename, { dir: this.settings['dataDir']});
+      const readImages = await readBinaryFile(dir + '/' + filename, { dir: this.settings['dataDir'] });
       let blob = new Blob([readImages]);
       this.backgroundImage = URL.createObjectURL(blob);
       this.settings['imageName'] = filename;
@@ -89,6 +105,7 @@ export default {
 
         await DB.initDB();
         await this.getSettingsList();
+        await this.getGroups()
 
         if (this.settings['alwaysOnTop']) {
           appWindow.setAlwaysOnTop(this.settings['alwaysOnTop']);
@@ -145,15 +162,20 @@ export default {
       const list = DB.get("settings");
       this.settings = list
 
-      if(list.imageName){
+      if (list.imageName) {
         let isImagesExit = await exists('images/' + list.imageName, { dir: list['dataDir'] });
-      if (isImagesExit) {
-        const readImages = await readBinaryFile('images/' + list.imageName, { dir: list['dataDir']});
-        let blob = new Blob([readImages]);
-        this.backgroundImage = URL.createObjectURL(blob);
-      }
+        if (isImagesExit) {
+          const readImages = await readBinaryFile('images/' + list.imageName, { dir: list['dataDir'] });
+          let blob = new Blob([readImages]);
+          this.backgroundImage = URL.createObjectURL(blob);
+        }
       }
 
+    },
+
+    async getGroups() {
+      const list = DB.get("groups");
+      this.groups = list
     },
   },
   created() {

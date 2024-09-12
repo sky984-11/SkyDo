@@ -57,7 +57,11 @@ const DB = {
       }
 
       const contents = await readTextFile('db.json', { dir: AppData });
+
       db = JSON.parse(contents);
+      if(!db.groups){   // 兼容旧版本
+        db.groups = ['Todo']
+      }
       this._ensureIDs('todoList');
       this._ensureIDs('doneList');
     } catch (error) {
@@ -73,22 +77,23 @@ const DB = {
 
   async _createDefaultDB(osType) {
     const defaultData = {
-      todoList: DEFAULT_TODO_LIST,
-      doneList: DEFAULT_DONE_LIST,
+      todoList: DEFAULT_TODO_LIST,  // 默认Todo代办列表
+      doneList: DEFAULT_DONE_LIST,  // 完成列表
       settings: {
-        autoStart: true,
+        autoStart: true,  // 是否开机自启
         wechatNotificationEnabled: false,
-        alwaysOnTop: false,
-        osType,
-        dataDir: AppData
-      }
+        alwaysOnTop: false,   // 是否始终置顶
+        osType,    // 系统类型
+        dataDir: AppData,   // 数据目录
+        defaultGroup: 'Todo',  // 默认分组
+      },
+      groups:['Todo']    // 组
     };
 
     await writeTextFile('db.json', JSON.stringify(defaultData), { dir: AppData });
   },
 
   get(key) {
-    console.log('db.get', key, db[key]);
     return db[key];
   },
 
